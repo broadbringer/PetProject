@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Packages.Scripts.Animation;
 using UnityEngine;
 
 public class PlayerControllerMovement : MonoBehaviour
@@ -9,9 +10,10 @@ public class PlayerControllerMovement : MonoBehaviour
     private bool groundedPlayer;
     public float playerSpeed = 2.0f;
     private float jumpHeight = 1.0f;
-
+    
     private float gravityValue = -9.81f;
 
+    public CharacterAnimator Animator;
     
     // Update is called once per frame
     void Update()
@@ -24,6 +26,15 @@ public class PlayerControllerMovement : MonoBehaviour
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * playerSpeed);
+
+        if (Vector3.SqrMagnitude(move) > 0)
+        {
+            Animator.PlayMove(.8f);
+        }
+        else
+        {
+            Animator.StopMove();
+        }
 
        // gameObject.transform.forward = move;
         
