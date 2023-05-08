@@ -2,11 +2,17 @@
 using Packages.Scripts.Characters;
 using UnityEngine;
 
-namespace Packages.Scripts.Components.Input
+namespace Packages.Scripts.Components.InputData
 {
     public class UserInputForMoving : MonoBehaviour
     {
         public GameCharacter Character;
+        private IInputHardware inputHardware;
+
+        private void Awake()
+        {
+            inputHardware = new KeyboardAndMouseInputHardware();
+        }
 
         private void Update()
         {
