@@ -1,23 +1,26 @@
 ﻿using System;
 using Packages.Scripts.Characters;
 using UnityEngine;
+using Zenject;
 
 namespace Packages.Scripts.Components.InputData
 {
     public class UserInputForMoving : MonoBehaviour
     {
         public GameCharacter Character;
+        
         private IInputHardware inputHardware;
-
-        private void Awake()
+        
+        [Inject]
+        private void Construct(IInputHardware inputHardware)
         {
-            inputHardware = new KeyboardAndMouseInputHardware();
+            this.inputHardware = inputHardware;
         }
 
         private void Update()
         {
-            var verticalInputAxis = UnityEngine.Input.GetAxisRaw("Vertical");
-            var horizontalInputAxis = UnityEngine.Input.GetAxisRaw("Horizontal");
+            var verticalInputAxis = inputHardware.VerticalAxis;
+            var horizontalInputAxis = inputHardware.HorizontalAxis;
 
             var moveDirection = new Vector3(horizontalInputAxis, 0, verticalInputAxis);
             
